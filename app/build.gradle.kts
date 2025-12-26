@@ -65,4 +65,6 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.57.2")
     kapt("com.google.dagger:hilt-compiler:2.57.2")
     implementation("androidx.hilt:hilt-lifecycle-viewmodel-compose:1.3.0")
+    // 支持 M2/M3的 通用 vector 图标库
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
 }

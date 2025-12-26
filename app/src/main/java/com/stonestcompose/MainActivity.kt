@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.stonestcompose.ui.founddation.TestButton
 import com.stonestcompose.ui.founddation.TestText
+import com.stonestcompose.ui.founddation.TestTextField
 import com.stonestcompose.ui.theme.StComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -50,99 +51,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Preview(showBackground = true)
-    @Composable
-    fun ShowMenu() {
-        // 当前页面的状态
-        val currentFullPage = remember { mutableStateOf("") }
-        Box(modifier = Modifier.fillMaxSize()) {
-            MainDashboard(
-                onOpenPage = { page ->
-                    currentFullPage.value = page
-                }
-            )
-
-            // 使用 AnimatedContent 做出现/消失动画
-            AnimatedContent(
-                targetState = currentFullPage,
-                label = "FullPageTransition",
-                modifier = Modifier.fillMaxSize().zIndex(1f), // 确保覆盖在最上面
-                transitionSpec = {
-                    // 定义动画：从下往上滑入，从上往下滑出
-                    slideInVertically(tween(durationMillis = 5000)) { height -> height } + fadeIn(tween(durationMillis = 1500)) togetherWith
-                            slideOutVertically(tween(durationMillis = 5000)) { height -> -height } + fadeOut(tween(durationMillis = 1500))
-                }
-            ) { targetScreen ->
-
-                if (targetScreen.value != "") {
-                    // 关键：拦截物理返回键，若是在屏幕左右边缘向里滑动退出，也能执行到
-                    // 当全屏页显示时，按返回键 = 关闭全屏页，而不是退出 App
-                    BackHandler {
-                        currentFullPage.value = ""
-                    }
-
-                    // 渲染具体的全屏页面，且背景不透明
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background // 必须设置背景色遮挡底部
-                    ) {
-                        // 自定义的工厂函数，加载不同的功能页面
-                        clickToShowMenu(targetScreen.value)
-
-                        // 在这里覆盖一个悬浮的 关闭按钮
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            Button(
-                                onClick = { currentFullPage.value = "" },
-                                modifier = Modifier.align(Alignment.CenterEnd).padding(16.dp)
-                            ) {
-                                Text("关闭")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun MainDashboard(onOpenPage: (String) -> Unit) {
-        // 垂直排列：一个 标题，一个列表
-        Column(modifier = Modifier.fillMaxSize().statusBarsPadding()) {
-            Text("功能仪表盘", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(16.dp))
-            // 动态纵向列表
-            LazyColumn {
-                itemsIndexed(TITLES) { index, title ->
-                    DashboardButton(title) {
-                        onOpenPage(title)
-                    }
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun DashboardButton(title: String, onClick: () -> Unit) {
-        Card(modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .height(80.dp)
-            .clickable(onClick = onClick)) {
-            Text(title, modifier = Modifier.padding(16.dp))
-        }
-    }
-
-    @Composable
-    private fun clickToShowMenu(item: String) {
-        when (item) {
-            "test Text" -> TestText()
-            "test Button" -> TestButton()
-        }
-    }
-
     companion object {
         val TITLES = listOf(
             "test Text",
             "test Button",
+            "test TextField",
             "test Layout/Measure",
             "test Pager",
             "test BottomSheet",
@@ -153,7 +66,6 @@ class MainActivity : ComponentActivity() {
             "test Column",
             "test Row",
             "test Box",
-            "test TextField",
             "test Slider",
             "test Image",
             "test Icon",
@@ -169,6 +81,96 @@ class MainActivity : ComponentActivity() {
             "test ",
             "test ",
         )
+    }
+}
+
+// 注意：要预览，必须是无参的 Composable 函数
+@Preview(showBackground = true)
+@Composable
+private fun ShowMenu() {
+    val menus = MainActivity.TITLES
+    // 当前页面的状态
+    val currentFullPage = remember { mutableStateOf("") }
+    Box(modifier = Modifier.fillMaxSize()) {
+        MainDashboard(menus) { page ->
+            currentFullPage.value = page
+        }
+
+        // 使用 AnimatedContent 做出现/消失动画
+        AnimatedContent(
+            targetState = currentFullPage,
+            label = "FullPageTransition",
+            modifier = Modifier.fillMaxSize().zIndex(1f), // 确保覆盖在最上面
+            transitionSpec = {
+                // 定义动画：从下往上滑入，从上往下滑出
+                slideInVertically(tween(durationMillis = 5000)) { height -> height } + fadeIn(tween(durationMillis = 1500)) togetherWith
+                        slideOutVertically(tween(durationMillis = 5000)) { height -> -height } + fadeOut(tween(durationMillis = 1500))
+            }
+        ) { targetScreen ->
+
+            if (targetScreen.value != "") {
+                // 关键：拦截物理返回键，若是在屏幕左右边缘向里滑动退出，也能执行到
+                // 当全屏页显示时，按返回键 = 关闭全屏页，而不是退出 App
+                BackHandler {
+                    currentFullPage.value = ""
+                }
+
+                // 渲染具体的全屏页面，且背景不透明
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background // 必须设置背景色遮挡底部
+                ) {
+                    // 自定义的工厂函数，加载不同的功能页面
+                    clickToShowMenu(targetScreen.value)
+
+                    // 在这里覆盖一个悬浮的 关闭按钮
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Button(
+                            onClick = { currentFullPage.value = "" },
+                            modifier = Modifier.align(Alignment.CenterEnd).padding(16.dp)
+                        ) {
+                            Text("关闭")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MainDashboard(menus: List<String>, onOpenPage: (String) -> Unit) {
+    // 垂直排列：一个 标题，一个列表
+    Column(modifier = Modifier.fillMaxSize().statusBarsPadding()) {
+        Text("功能仪表盘", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(16.dp))
+        // 动态纵向列表
+        LazyColumn {
+            itemsIndexed(menus) { index, title ->
+                DashboardButton(title) {
+                    onOpenPage(title)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DashboardButton(title: String, onClick: () -> Unit) {
+    Card(modifier = Modifier
+        .padding(8.dp)
+        .fillMaxWidth()
+        .height(80.dp)
+        .clickable(onClick = onClick)) {
+        Text(title, modifier = Modifier.padding(16.dp))
+    }
+}
+
+@Composable
+private fun clickToShowMenu(item: String) {
+    when (item) {
+        "test Text" -> TestText()
+        "test Button" -> TestButton()
+        "test TextField" -> TestTextField()
     }
 }
 

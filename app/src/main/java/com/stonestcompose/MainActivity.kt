@@ -35,9 +35,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.stonestcompose.ui.founddation.TestButton
-import com.stonestcompose.ui.founddation.TestText
-import com.stonestcompose.ui.founddation.TestTextField
+import com.stonestcompose.ui.foundation.TestButton
+import com.stonestcompose.ui.foundation.TestIconAndIconButton
+import com.stonestcompose.ui.foundation.TestText
+import com.stonestcompose.ui.foundation.TestTextField
+import com.stonestcompose.ui.state.StateCase
 import com.stonestcompose.ui.theme.StComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -53,9 +55,11 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         val TITLES = listOf(
-            "test Text",
-            "test Button",
-            "test TextField",
+            "test StateCase",
+            "test FD.Text",
+            "test FD.Button",
+            "test FD.TextField",
+            "test FD.Icon/IconButton",
             "test Layout/Measure",
             "test Pager",
             "test BottomSheet",
@@ -108,7 +112,7 @@ private fun ShowMenu() {
             }
         ) { targetScreen ->
 
-            if (targetScreen.value != "") {
+            if (targetScreen.value != "") { // 非空则加载下面的 composable
                 // 关键：拦截物理返回键，若是在屏幕左右边缘向里滑动退出，也能执行到
                 // 当全屏页显示时，按返回键 = 关闭全屏页，而不是退出 App
                 BackHandler {
@@ -121,7 +125,7 @@ private fun ShowMenu() {
                     color = MaterialTheme.colorScheme.background // 必须设置背景色遮挡底部
                 ) {
                     // 自定义的工厂函数，加载不同的功能页面
-                    clickToShowMenu(targetScreen.value)
+                    ClickToShowMenu(targetScreen.value)
 
                     // 在这里覆盖一个悬浮的 关闭按钮
                     Box(modifier = Modifier.fillMaxSize()) {
@@ -166,11 +170,13 @@ private fun DashboardButton(title: String, onClick: () -> Unit) {
 }
 
 @Composable
-private fun clickToShowMenu(item: String) {
+private fun ClickToShowMenu(item: String) {
     when (item) {
-        "test Text" -> TestText()
-        "test Button" -> TestButton()
-        "test TextField" -> TestTextField()
+        "test StateCase" -> StateCase()
+        "test FD.Text" -> TestText()
+        "test FD.Button" -> TestButton()
+        "test FD.TextField" -> TestTextField()
+        "test FD.Icon/IconButton" -> TestIconAndIconButton()
     }
 }
 

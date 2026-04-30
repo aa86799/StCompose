@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version libs.versions.kotlin
     id("dagger.hilt.android.plugin")
 }
 
@@ -53,6 +54,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.runtime.retain)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,4 +69,7 @@ dependencies {
     implementation("androidx.hilt:hilt-lifecycle-viewmodel-compose:1.3.0")
     // 支持 M2/M3的 通用 vector 图标库
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
+
+    // serialization 内部的 kotlin 版本，不要高于 项目中整体配置的 kotlin 版本；否则编译报错
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 }

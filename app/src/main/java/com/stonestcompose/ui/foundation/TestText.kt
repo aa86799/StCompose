@@ -1,6 +1,5 @@
-package com.stonestcompose.ui.founddation
+package com.stonestcompose.ui.foundation
 
-import androidx.compose.foundation.Image
 import com.stonestcompose.R
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll

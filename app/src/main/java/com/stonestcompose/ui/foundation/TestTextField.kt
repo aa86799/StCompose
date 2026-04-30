@@ -1,4 +1,4 @@
-package com.stonestcompose.ui.founddation
+package com.stonestcompose.ui.foundation
 
 import com.stonestcompose.R
 

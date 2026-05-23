@@ -2,6 +2,7 @@ package com.stonestcompose.ui.anim
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.AnimationVector2D
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.TwoWayConverter
 import androidx.compose.animation.core.VectorConverter
@@ -137,7 +138,21 @@ fun AnimatableCase4() { // 自定义类型
     // 对整个对象做动画
     LaunchedEffect(Unit) {
         anim.animateTo(MySize(800f, 800f),
-            tween(2500))
+            tween(2500, easing = CubicBezierEasing(
+                0.42f, 0f, 0.58f, 1.0f
+            )))
+        /*
+        easing（缓动）它决定了动画随时间变化的速率。
+        三次方贝塞尔曲线，定义动画节奏。
+        在动画中，这种曲线描述了“时间”与“动画完成进度”之间的关系。这四个参数实际上是两个控制点的坐标。
+        (x1,y1, x2,y2)
+        x 坐标的限制: 因为它们代表时间轴，时间不能倒流，也不能超过总时长，所以必须在 [0, 1] 之间
+        y 坐标的灵活性：y代表的是动画进度的拉伸方向，它们可以小于 0 或 大于 1
+            y>1时（过冲效果）：动画会在达到终点前，“冲过”目标值，然后再折返回来。这通常用于实现 Overshoot（回弹） 效果
+            y<0 时（预跳效果）：动画在开始时会先向相反方向移动，然后再向终点冲刺。这在动画设计中被称为 Anticipate（预备动作）。
+        大多数标准缓动（如 EaseIn 或 EaseOut）的 y 值都设为 0 或 1，
+        是因为这样可以确保动画的进度轨迹严格限制在起点（0）和终点（1）的范围之内，不会出现回弹或超出边界的情况。
+         */
     }
 
     Canvas(modifier = Modifier.fillMaxSize()) {

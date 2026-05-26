@@ -37,9 +37,10 @@ import com.stonestcompose.ui.foundation.TestText
 import com.stonestcompose.ui.foundation.TestTextField
 import com.stonestcompose.ui.state.StateCase
 
-private object Menu {
+object Menu {
     val TITLES = listOf(
         "test StateCase",
+        "test NaviArgsRoute",
         "test FD.Text",
         "test FD.Button",
         "test FD.TextField",

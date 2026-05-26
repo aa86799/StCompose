@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.stonestcompose.ui.navi.CustomNavigation
+import com.stonestcompose.ui.navi.StandardNavigation
 import com.stonestcompose.ui.theme.StComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +14,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StComposeTheme {
-                CustomNavigation()
+//                CustomNavigation()
+
+                StandardNavigation()
             }
         }
     }

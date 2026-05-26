@@ -7,29 +7,21 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AcUnit
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Square
-import androidx.compose.material.icons.outlined.AcUnit
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Square
-import androidx.compose.material.icons.rounded.AcUnit
 import androidx.compose.material.icons.rounded.Square
-import androidx.compose.material.icons.sharp.AcUnit
-import androidx.compose.material.icons.sharp.Delete
 import androidx.compose.material.icons.sharp.Square
-import androidx.compose.material.icons.twotone.AcUnit
 import androidx.compose.material.icons.twotone.Square
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,7 +40,7 @@ import com.stonestcompose.util.ToastUtil
 @Preview(showBackground = true)
 @Composable
 fun TestIconAndIconButton() {
-//    InnerIcons()
+    InnerIcons()
 
     Load()
 }
@@ -73,14 +65,14 @@ private fun InnerIcons() {
         )
         itemsIndexed(icons) { index, icon ->
             Icon(imageVector = icon, contentDescription = icon.name,
-                modifier = Modifier.width(80.dp).height(80.dp))
+                modifier = Modifier.width(50.dp).height(50.dp))
         }
     }
 }
 
 @Composable
 private fun Load() {
-    Column {
+    Column(modifier = Modifier.padding(top = 300.dp)) {
         // 矢量xml资源 图
         Icon(
             imageVector = ImageVector.vectorResource(
@@ -122,7 +114,7 @@ private fun Load() {
 
         MyIconButton(onClick = {
             ToastUtil.showToast("click it")
-        }, Modifier.background(Color.Magenta)) {
+        }, Modifier.background(Color.Transparent)) {
             // AS 将.svg 导入步骤：
             // 1. 右键 res/drawable 文件夹
             // 2. New -> Vector Asset
@@ -163,7 +155,6 @@ fun MyIconButton(
             .then(Modifier.size(120.dp)), // 增加了.then修饰
         contentAlignment = Alignment.Center
     ) {
-//        val contentAlpha = if (enabled) LocalContentAlpha.current else ContentAlpha.disabled
-//        CompositionLocalProvider(LocalContentAlpha provides contentAlpha, content = content)
+        content()
     }
 }

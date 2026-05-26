@@ -37,41 +37,6 @@ import com.stonestcompose.ui.foundation.TestText
 import com.stonestcompose.ui.foundation.TestTextField
 import com.stonestcompose.ui.state.StateCase
 
-object Menu {
-    val TITLES = listOf(
-        "test StateCase",
-        "test NaviArgsRoute",
-        "test FD.Text",
-        "test FD.Button",
-        "test FD.TextField",
-        "test FD.Icon/IconButton",
-        "test Layout/Measure",
-        "test Pager",
-        "test BottomSheet",
-        "test BottomNavigation",
-        "test Surface",
-        "test Scaffold",
-        "test FlowLayout",
-        "test Column",
-        "test Row",
-        "test Box",
-        "test Slider",
-        "test Image",
-        "test Icon",
-        "test FAB",
-        "test Card",
-        "test Button",
-        "test Text/Image/Button",
-        "test Row/Column/Box",
-        "test Material Design",
-        "test RememberState LazyColumn",
-        "test AlertDialog",
-        "test ",
-        "test ",
-        "test ",
-    )
-}
-
 // 注意：要预览，必须是无参的 Composable 函数
 @Preview(showBackground = true)
 @Composable
